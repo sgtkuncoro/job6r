@@ -12,7 +12,7 @@ Wastuargo ("Gogo") on how to get interviews and get hired as a software engineer
 | [`ai-assist/generate_cv_bullets.py`](ai-assist/generate_cv_bullets.py) | Runnable script that turns raw experience notes into **Verb + Impact + How** CV bullets via Groq. |
 | [`ai-assist/cv_doctor.py`](ai-assist/cv_doctor.py) | Runnable script that reads a **PDF CV**, rewrites it to the playbook, and writes two markdown files: a ready-to-use corrected CV + a detailed correction report. |
 | [`issues_cv/`](issues_cv/) → [`resolved_cv/`](resolved_cv/) | Drop a CV PDF in `issues_cv/`; `cv_doctor.py` writes the fixed CV + report into `resolved_cv/`. |
-| [`resume.job6r/`](resume.job6r/) | **Markdown → PDF web tool.** A TanStack Start app that turns your Markdown CV into an ATS-friendly PDF (real selectable text). See [its README](resume.job6r/README.md). |
+| [`resume.job6r/`](resume.job6r/) | **Markdown → PDF web tool.** A TanStack Start app that turns your Markdown CV into an ATS-friendly PDF (real selectable text). Live: <https://resume-job6r.sigit-kunc.workers.dev>. See [its README](resume.job6r/README.md). |
 | [`init/`](init/) | Source transcripts (`video1.md`, `video2.md`). |
 
 ## The whole system in 10 tricks
@@ -78,6 +78,8 @@ different model (e.g. `MODEL=openai/gpt-oss-120b` or
 <https://console.groq.com/docs/models>.
 
 ## Turn your Markdown CV into a PDF — [`resume.job6r/`](resume.job6r/)
+
+**Live app: <https://resume-job6r.sigit-kunc.workers.dev>** (or run it locally below).
 
 `cv_doctor.py` gives you a clean **Markdown** CV. [`resume.job6r/`](resume.job6r/)
 is the companion web tool that turns that Markdown into an **ATS-friendly PDF** —

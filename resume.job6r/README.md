@@ -4,6 +4,8 @@ A small **Turborepo** monorepo: a **TanStack Start** web app that turns a
 Markdown resume into an **ATS-friendly PDF** (real, selectable text via
 `@react-pdf/renderer` — no rasterized images, no Chromium).
 
+**Live: <https://resume-job6r.sigit-kunc.workers.dev>** (Cloudflare Workers).
+
 ## Structure
 
 ```
