@@ -1,0 +1,14 @@
+node_modules
+dist
+.output
+.nitro
+.tanstack
+.turbo
+.vite
+.wrangler
+*.local
+*.log
+.DS_Store
+
+# TanStack Router generated route tree
+**/src/routeTree.gen.ts

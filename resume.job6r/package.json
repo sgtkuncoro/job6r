@@ -1,0 +1,15 @@
+{
+  "name": "resume.job6r",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.5.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.0"
+  }
+}
