@@ -12,6 +12,7 @@ Wastuargo ("Gogo") on how to get interviews and get hired as a software engineer
 | [`ai-assist/generate_cv_bullets.py`](ai-assist/generate_cv_bullets.py) | Runnable script that turns raw experience notes into **Verb + Impact + How** CV bullets via Groq. |
 | [`ai-assist/cv_doctor.py`](ai-assist/cv_doctor.py) | Runnable script that reads a **PDF CV**, rewrites it to the playbook, and writes two markdown files: a ready-to-use corrected CV + a detailed correction report. |
 | [`issues_cv/`](issues_cv/) → [`resolved_cv/`](resolved_cv/) | Drop a CV PDF in `issues_cv/`; `cv_doctor.py` writes the fixed CV + report into `resolved_cv/`. |
+| [`resume.job6r/`](resume.job6r/) | **Markdown → PDF web tool.** A TanStack Start app that turns your Markdown CV into an ATS-friendly PDF (real selectable text). See [its README](resume.job6r/README.md). |
 | [`init/`](init/) | Source transcripts (`video1.md`, `video2.md`). |
 
 ## The whole system in 10 tricks
@@ -75,3 +76,31 @@ Default model is `llama-3.3-70b-versatile`. Set `MODEL=...` for a stronger or
 different model (e.g. `MODEL=openai/gpt-oss-120b` or
 `MODEL=moonshotai/kimi-k2-instruct`); see
 <https://console.groq.com/docs/models>.
+
+## Turn your Markdown CV into a PDF — [`resume.job6r/`](resume.job6r/)
+
+`cv_doctor.py` gives you a clean **Markdown** CV. [`resume.job6r/`](resume.job6r/)
+is the companion web tool that turns that Markdown into an **ATS-friendly PDF** —
+real, selectable text via `@react-pdf/renderer` (no rasterized images, no
+Chromium), single-column layout with standard headings that ATS parsers read
+reliably.
+
+It's a small **Turborepo** monorepo:
+
+- **`apps/web/`** — a **TanStack Start** app: edit Markdown on the left, watch the
+  live preview on the right, click **Download PDF**.
+- **`packages/md-pdf/`** — the shared library: `parseMarkdown()`,
+  `markdownToHtml()` (preview), and `renderResumePdfBlob()` (PDF download).
+
+Run it locally:
+
+```bash
+cd resume.job6r
+pnpm install
+pnpm dev            # http://localhost:3000
+```
+
+Typical flow: run `cv_doctor.py` on your PDF → copy the corrected Markdown from
+`resolved_cv/Profile.final.md` into the editor → tweak → **Download PDF**. Full
+details (build, deploy, how the PDF stays ATS-friendly) are in
+[`resume.job6r/README.md`](resume.job6r/README.md).
