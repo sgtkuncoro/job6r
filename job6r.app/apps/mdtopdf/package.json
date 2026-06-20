@@ -14,15 +14,16 @@
     "@codemirror/lang-markdown": "^6.3.0",
     "@codemirror/language": "^6.10.0",
     "@codemirror/view": "^6.34.0",
-    "@lezer/highlight": "^1.2.0",
     "@hugeicons/core-free-icons": "^4.2.0",
     "@hugeicons/react": "^1.1.6",
     "@job6r/md2pdf": "workspace:*",
-    "@uiw/react-codemirror": "^4.23.7",
+    "@lezer/highlight": "^1.2.0",
     "@tanstack/react-router": "latest",
     "@tanstack/react-start": "latest",
+    "@uiw/react-codemirror": "^4.23.7",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-resizable-panels": "^4.11.2"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.40.0",
