@@ -226,8 +226,68 @@ body {
   border-color: var(--color-primary);
 }
 
+/* Resizable split (desktop): react-resizable-panels renders a flex Group. The
+   Panel className ("pane") lands on a nested div, so stretch it to fill. */
+.panes-rz {
+  flex: 1;
+  min-height: 0;
+}
+
+.panes-rz .pane {
+  height: 100%;
+}
+
+/* Drag handle between the panels. 12px hit area (matches the grid gap); a 1px
+   rule sits in the middle and turns the primary color (with a small grip) on
+   hover/drag. Double-clicking the handle resets to the default 50/50 split. */
+.pane-separator {
+  position: relative;
+  /* Size via width, not flex-basis: the library sets `flex-basis: auto`
+     inline. With its inline `flex-shrink: 0`, an explicit width gives a stable
+     12px hit area. */
+  width: 12px;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  background: transparent;
+  touch-action: none;
+}
+
+.pane-separator::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  background: var(--color-border-default);
+  transition:
+    background var(--motion-instant) ease,
+    width var(--motion-instant) ease;
+}
+
+.pane-separator::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 28px;
+  border-radius: var(--radius-lg);
+  background: var(--color-border-default);
+  transition: background var(--motion-instant) ease;
+}
+
+.pane-separator:hover::before,
+.pane-separator:active::before {
+  width: 2px;
+  background: var(--color-primary);
+}
+
+.pane-separator:hover::after,
+.pane-separator:active::after {
+  background: var(--color-primary);
+}
+
 /* Small screens: show the tab bar and display only the pane matching the
-   active tab (full height). Large screens keep the two-column layout above. */
+   active tab (full height). Large screens keep the resizable split above. */
 @media (max-width: 768px) {
   .tabs {
     display: flex;
