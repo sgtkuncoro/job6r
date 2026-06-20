@@ -12,7 +12,7 @@ Wastuargo ("Gogo") on how to get interviews and get hired as a software engineer
 | [`ai-assist/generate_cv_bullets.py`](ai-assist/generate_cv_bullets.py) | Runnable script that turns raw experience notes into **Verb + Impact + How** CV bullets via Groq. |
 | [`ai-assist/cv_doctor.py`](ai-assist/cv_doctor.py) | Runnable script that reads a **PDF CV**, rewrites it to the playbook, and writes two markdown files: a ready-to-use corrected CV + a detailed correction report. |
 | [`issues_cv/`](issues_cv/) → [`resolved_cv/`](resolved_cv/) | Drop a CV PDF in `issues_cv/`; `cv_doctor.py` writes the fixed CV + report into `resolved_cv/`. |
-| [`resume.job6r/`](resume.job6r/) | **Markdown → PDF web tool.** A TanStack Start app that turns your Markdown CV into an ATS-friendly PDF (real selectable text). Live: <https://resume-job6r.sigit-kunc.workers.dev>. See [its README](resume.job6r/README.md). |
+| [`job6r.app/`](job6r.app/) | **Markdown to PDF web tool.** A Turborepo monorepo; its `apps/mdtopdf` TanStack Start app converts Markdown into an ATS-friendly PDF (real selectable text). Live: <https://mdtopdf-job6r.sigit-kunc.workers.dev>. See [its README](job6r.app/README.md). |
 | [`init/`](init/) | Source transcripts (`video1.md`, `video2.md`). |
 
 ## The whole system in 10 tricks
@@ -77,27 +77,29 @@ different model (e.g. `MODEL=openai/gpt-oss-120b` or
 `MODEL=moonshotai/kimi-k2-instruct`); see
 <https://console.groq.com/docs/models>.
 
-## Turn your Markdown CV into a PDF — [`resume.job6r/`](resume.job6r/)
+## Turn your Markdown CV into a PDF: [`job6r.app/`](job6r.app/)
 
-**Live app: <https://resume-job6r.sigit-kunc.workers.dev>** (or run it locally below).
+**Live app: <https://mdtopdf-job6r.sigit-kunc.workers.dev>** (or run it locally below).
 
-`cv_doctor.py` gives you a clean **Markdown** CV. [`resume.job6r/`](resume.job6r/)
-is the companion web tool that turns that Markdown into an **ATS-friendly PDF** —
-real, selectable text via `@react-pdf/renderer` (no rasterized images, no
-Chromium), single-column layout with standard headings that ATS parsers read
-reliably.
+`cv_doctor.py` gives you a clean **Markdown** CV. [`job6r.app/`](job6r.app/)
+is a **Turborepo** monorepo of small web apps under the `job6r.app` umbrella; its
+first app, `apps/mdtopdf`, is the companion **Markdown to PDF** web tool that
+turns that Markdown into an **ATS-friendly PDF**: real, selectable text via
+`@react-pdf/renderer` (no rasterized images, no Chromium), single-column layout
+with standard headings that ATS parsers read reliably.
 
-It's a small **Turborepo** monorepo:
+The monorepo:
 
-- **`apps/web/`** — a **TanStack Start** app: edit Markdown on the left, watch the
-  live preview on the right, click **Download PDF**.
-- **`packages/md-pdf/`** — the shared library: `parseMarkdown()`,
-  `markdownToHtml()` (preview), and `renderResumePdfBlob()` (PDF download).
+- **`apps/mdtopdf/`**: a **TanStack Start** app. Edit Markdown on the left, watch
+  the live preview on the right, click **Download PDF**.
+- **`packages/md2pdf/`** (`@job6r/md2pdf`): the shared library with
+  `parseMarkdown()`, `markdownToHtml()` (preview), and `renderResumePdfBlob()`
+  (PDF download).
 
 Run it locally:
 
 ```bash
-cd resume.job6r
+cd job6r.app
 pnpm install
 pnpm dev            # http://localhost:3000
 ```
@@ -105,4 +107,4 @@ pnpm dev            # http://localhost:3000
 Typical flow: run `cv_doctor.py` on your PDF → copy the corrected Markdown from
 `resolved_cv/Profile.final.md` into the editor → tweak → **Download PDF**. Full
 details (build, deploy, how the PDF stays ATS-friendly) are in
-[`resume.job6r/README.md`](resume.job6r/README.md).
+[`job6r.app/README.md`](job6r.app/README.md).
