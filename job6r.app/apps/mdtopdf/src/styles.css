@@ -1,11 +1,66 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Poppins:wght@100;300;600;700&display=swap");
 
 :root {
-  --bg: #f6f7f9;
-  --panel: #ffffff;
-  --border: #e4e7eb;
-  --text: #1e1e1e;
-  --muted: #6b7280;
+  /* --- Design tokens (docs/design-system.md) --- */
+
+  /* Typography: primary family is cera; falls back to the system sans stack
+     since cera is not bundled. */
+  --font-family-primary: cera, "cera Fallback", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 16px;
+  --font-size-md: 20px;
+  --font-weight-base: 400;
+  --font-weight-strong: 600;
+  --line-height-base: 24px;
+
+  /* Color */
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #324252;
+  /* design token text.inverse (#0d0d28) fails AA on a dark button, so on-dark
+     text uses the raised surface (#fff) to satisfy the contrast rule. */
+  --color-text-inverse: #ffffff;
+  --color-surface-base: #000000;
+  --color-surface-muted: #f5f5f5;
+  --color-surface-raised: #ffffff;
+  --color-surface-strong: #f8f9f8;
+  --color-border-default: #e5e5e5;
+  --color-border-muted: #cccccc;
+  /* The system defines no accent; the primary action uses the black base. */
+  --color-primary: #0a0a0a;
+  --color-primary-hover: #000000;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 96px;
+
+  /* Radius / motion */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 9999px;
+  --motion-instant: 150ms;
+  --motion-fast: 300ms;
+
+  /* Focus ring (focus-visible requirement, WCAG 2.2 AA). */
+  --focus-ring: 0 0 0 3px rgba(10, 10, 10, 0.4);
+
+  /* --- Legacy vars retained for the PDF-mirror preview (.preview / .r-*),
+     which intentionally matches the downloaded PDF, not the app chrome. --- */
+  --bg: var(--color-surface-muted);
+  --panel: var(--color-surface-raised);
+  --border: var(--color-border-default);
+  --text: var(--color-text-primary);
+  --muted: var(--color-text-secondary);
   --accent: #2563eb;
 }
 
@@ -17,25 +72,20 @@ html,
 body {
   margin: 0;
   height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+  line-height: var(--line-height-base);
 }
 
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 16px;
-  gap: 12px;
+  padding: var(--space-5);
+  gap: var(--space-4);
 }
 
 .topbar {
@@ -46,36 +96,63 @@ body {
 
 .topbar h1 {
   margin: 0;
-  font-size: 20px;
-  font-family: Poppins, "Segoe UI", system-ui, sans-serif;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-strong);
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
 }
 
 .topbar h1 svg {
-  color: var(--accent);
+  color: var(--color-text-primary);
 }
 
 .sub {
-  margin: 2px 0 0;
-  color: var(--muted);
-  font-size: 13px;
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
 }
 
+/* Primary action button. States: default, hover, focus-visible, active,
+   disabled (also used for the loading state, paired with the spinner). */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
+  gap: var(--space-3);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-strong);
+  line-height: 1;
   cursor: pointer;
+  transition:
+    background var(--motion-instant) ease,
+    box-shadow var(--motion-instant) ease,
+    transform var(--motion-instant) ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .spin {
@@ -88,49 +165,135 @@ body {
   }
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: progress;
-}
-
+/* Error state. */
 .error {
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-xs);
 }
 
 .panes {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: var(--space-4);
   flex: 1;
   min-height: 0;
+}
+
+/* Tab bar: hidden on large screens (panes sit side by side). */
+.tabs {
+  display: none;
+}
+
+.tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-strong);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--motion-instant) ease,
+    color var(--motion-instant) ease,
+    border-color var(--motion-instant) ease,
+    box-shadow var(--motion-instant) ease;
+}
+
+.tab:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-muted);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Small screens: show the tab bar and display only the pane matching the
+   active tab (full height). Large screens keep the two-column layout above. */
+@media (max-width: 768px) {
+  .tabs {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .panes {
+    grid-template-columns: 1fr;
+  }
+
+  .panes[data-tab="editor"] .pane--preview,
+  .panes[data-tab="preview"] .pane--editor {
+    display: none;
+  }
+
+  /* The tab bar already labels the visible pane. Scoped under .app so it wins
+     over the later base `.pane-label { display: flex }` rule (source order). */
+  .app .pane-label {
+    display: none;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  /* Editor uses the larger 16px size only on small screens. Scoped under .app
+     so it wins over the later base editor rules (source order). */
+  .app .editor,
+  .app .editor-cm .cm-editor {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .pane {
   display: flex;
   flex-direction: column;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
   overflow: hidden;
   min-height: 0;
+  transition:
+    border-color var(--motion-instant) ease,
+    box-shadow var(--motion-instant) ease;
+}
+
+/* Visible focus indicator for the editing pane (textarea or CodeMirror),
+   replacing the editor's removed native outline. */
+.pane:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 .pane-label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  /* text-transform: uppercase; */
+  gap: var(--space-2);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-strong);
+  color: var(--color-text-secondary);
   letter-spacing: 0.04em;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .editor {
@@ -138,14 +301,15 @@ body {
   border: none;
   outline: none;
   resize: none;
-  padding: 14px;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  padding: var(--space-4);
+  font-family: var(--font-family-mono);
   font-size: 13px;
   line-height: 1.55;
-  color: var(--text);
+  color: var(--color-text-primary);
 }
 
-/* CodeMirror editor: fill the pane and match the textarea's mono styling. */
+/* CodeMirror editor: fill the pane and match the textarea's mono styling.
+   The visible focus ring lives on .pane:focus-within (WCAG 2.2 AA). */
 .editor-cm {
   flex: 1;
   min-height: 0;
@@ -155,7 +319,7 @@ body {
 .editor-cm .cm-editor {
   width: 100%;
   height: 100%;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-family-mono);
   font-size: 13px;
 }
 
@@ -168,13 +332,13 @@ body {
 }
 
 .editor-cm .cm-content {
-  padding: 14px 0;
+  padding: var(--space-4) 0;
 }
 
 .editor-cm .cm-gutters {
   background: transparent;
-  border-right: 1px solid var(--border);
-  color: var(--muted);
+  border-right: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
 }
 
 .preview {

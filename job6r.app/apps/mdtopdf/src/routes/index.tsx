@@ -25,6 +25,9 @@ function Home() {
   // hydration matches), then swap in CodeMirror once mounted on the client.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  // Mobile only: which pane the tab bar shows. Ignored on large screens, where
+  // both panes are always visible side by side.
+  const [tab, setTab] = useState<"editor" | "preview">("editor");
 
   const html = useMemo(() => markdownToHtml(markdown), [markdown]);
 
@@ -63,7 +66,7 @@ function Home() {
     <main className="app">
       <header className="topbar">
         <div>
-          <h1>mdtopdf.job6r.app</h1>
+          <h1>mdtopdf.job6r</h1>
           <p className="sub">
             Free Markdown to PDF converter. Paste Markdown, download a clean,
             ATS-friendly PDF.
@@ -82,8 +85,33 @@ function Home() {
 
       {error && <div className="error">{error}</div>}
 
-      <section className="panes">
-        <div className="pane">
+      {/* Tab bar: only visible on small screens (CSS). Switches the single
+          visible pane between the editor and the preview. */}
+      <div className="tabs" role="tablist" aria-label="Editor or preview">
+        <button
+          type="button"
+          role="tab"
+          className="tab"
+          aria-selected={tab === "editor"}
+          onClick={() => setTab("editor")}
+        >
+          <HugeiconsIcon icon={SourceCodeIcon} size={15} strokeWidth={2} />
+          Markdown
+        </button>
+        <button
+          type="button"
+          role="tab"
+          className="tab"
+          aria-selected={tab === "preview"}
+          onClick={() => setTab("preview")}
+        >
+          <HugeiconsIcon icon={Pdf01Icon} size={15} strokeWidth={2} />
+          Preview
+        </button>
+      </div>
+
+      <section className="panes" data-tab={tab}>
+        <div className="pane pane--editor">
           <div className="pane-label">
             <HugeiconsIcon icon={SourceCodeIcon} size={15} strokeWidth={2} />
             Markdown
@@ -96,7 +124,7 @@ function Home() {
             fallbackEditor
           )}
         </div>
-        <div className="pane">
+        <div className="pane pane--preview">
           <div className="pane-label">
             <HugeiconsIcon icon={Pdf01Icon} size={15} strokeWidth={2} />
             Preview

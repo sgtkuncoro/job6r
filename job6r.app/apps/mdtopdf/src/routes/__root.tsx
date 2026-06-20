@@ -8,14 +8,14 @@ import type { ReactNode } from "react";
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://mdtopdf-job6r.sigit-kunc.workers.dev";
-const TITLE = "Markdown to PDF - Free Online Converter | mdtopdf.job6r.app";
+const TITLE = "Markdown to PDF - Free Online Converter | mdtopdf.job6r";
 const DESCRIPTION =
   "Convert Markdown to PDF online for free. Paste Markdown, preview live, and download a clean, ATS-friendly PDF with real selectable text - tables, code blocks, lists, and images included.";
 
 const STRUCTURED_DATA = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "mdtopdf.job6r.app",
+  name: "mdtopdf.job6r",
   url: `${SITE_URL}/`,
   applicationCategory: "UtilitiesApplication",
   operatingSystem: "Any (web browser)",
@@ -37,9 +37,9 @@ export const Route = createRootRoute({
       { title: TITLE },
       { name: "description", content: DESCRIPTION },
       { name: "robots", content: "index, follow" },
-      { name: "theme-color", content: "#2563eb" },
+      { name: "theme-color", content: "#0a0a0a" },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "mdtopdf.job6r.app" },
+      { property: "og:site_name", content: "mdtopdf.job6r" },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:url", content: `${SITE_URL}/` },
