@@ -1,14 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Pdf02Icon,
   SourceCodeIcon,
-  ViewIcon,
-  SparklesIcon,
+  Pdf01Icon,
   Loading03Icon,
 } from "@hugeicons/core-free-icons";
 import { markdownToHtml, SAMPLE_RESUME } from "@job6r/md2pdf";
+
+// CodeMirror is client-only (it touches the DOM). Lazy-load it so it never
+// enters the Cloudflare Workers SSR bundle.
+const MarkdownEditor = lazy(() => import("../components/MarkdownEditor"));
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -18,8 +21,21 @@ function Home() {
   const [markdown, setMarkdown] = useState(SAMPLE_RESUME);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Render the plain textarea on the server and the first client paint (so
+  // hydration matches), then swap in CodeMirror once mounted on the client.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const html = useMemo(() => markdownToHtml(markdown), [markdown]);
+
+  const fallbackEditor = (
+    <textarea
+      className="editor"
+      value={markdown}
+      spellCheck={false}
+      onChange={(e) => setMarkdown(e.target.value)}
+    />
+  );
 
   async function downloadPdf() {
     setBusy(true);
@@ -47,10 +63,7 @@ function Home() {
     <main className="app">
       <header className="topbar">
         <div>
-          <h1>
-            <HugeiconsIcon icon={SparklesIcon} size={20} strokeWidth={2} />
-            job6r.app
-          </h1>
+          <h1>job6r.app</h1>
           <p className="sub">
             Free Markdown to PDF converter. Paste Markdown, download a clean,
             ATS-friendly PDF.
@@ -75,16 +88,17 @@ function Home() {
             <HugeiconsIcon icon={SourceCodeIcon} size={15} strokeWidth={2} />
             Markdown
           </div>
-          <textarea
-            className="editor"
-            value={markdown}
-            spellCheck={false}
-            onChange={(e) => setMarkdown(e.target.value)}
-          />
+          {mounted ? (
+            <Suspense fallback={fallbackEditor}>
+              <MarkdownEditor value={markdown} onChange={setMarkdown} />
+            </Suspense>
+          ) : (
+            fallbackEditor
+          )}
         </div>
         <div className="pane">
           <div className="pane-label">
-            <HugeiconsIcon icon={ViewIcon} size={15} strokeWidth={2} />
+            <HugeiconsIcon icon={Pdf01Icon} size={15} strokeWidth={2} />
             Preview
           </div>
           <div
