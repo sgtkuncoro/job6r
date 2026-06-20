@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mdtopdf-job6r.sigit-kunc.workers.dev/sitemap.xml

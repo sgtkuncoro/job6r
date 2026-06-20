@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Download04Icon,
+  Pdf02Icon,
   SourceCodeIcon,
   ViewIcon,
   SparklesIcon,
   Loading03Icon,
 } from "@hugeicons/core-free-icons";
-import { markdownToHtml, SAMPLE_RESUME } from "@resume/md-pdf";
+import { markdownToHtml, SAMPLE_RESUME } from "@job6r/md2pdf";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -26,7 +26,7 @@ function Home() {
     setError(null);
     try {
       // Import the react-pdf renderer lazily, client-side only.
-      const { renderResumePdfBlob } = await import("@resume/md-pdf/pdf");
+      const { renderResumePdfBlob } = await import("@job6r/md2pdf/pdf");
       const blob = await renderResumePdfBlob(markdown);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -49,13 +49,16 @@ function Home() {
         <div>
           <h1>
             <HugeiconsIcon icon={SparklesIcon} size={20} strokeWidth={2} />
-            resume.job6r
+            job6r.app
           </h1>
-          <p className="sub">Markdown in, ATS-friendly PDF out.</p>
+          <p className="sub">
+            Free Markdown to PDF converter. Paste Markdown, download a clean,
+            ATS-friendly PDF.
+          </p>
         </div>
         <button className="btn" onClick={downloadPdf} disabled={busy}>
           <HugeiconsIcon
-            icon={busy ? Loading03Icon : Download04Icon}
+            icon={busy ? Loading03Icon : Pdf02Icon}
             size={18}
             strokeWidth={2}
             className={busy ? "spin" : undefined}

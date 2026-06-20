@@ -162,6 +162,9 @@ body {
 .r-h1,
 .r-h2,
 .r-h3,
+.r-h4,
+.r-h5,
+.r-h6,
 .r-subhead,
 .r-meta {
   font-family: Poppins, "Segoe UI", system-ui, sans-serif;
@@ -187,6 +190,25 @@ body {
   margin: 19px 0 2px;
 }
 
+.r-h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 13px 0 2px;
+}
+
+.r-h5 {
+  font-size: 13.5px;
+  font-weight: 600;
+  margin: 11px 0 2px;
+}
+
+.r-h6 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  margin: 11px 0 2px;
+}
+
 .r-subhead {
   font-size: 14px;
   font-weight: 600;
@@ -204,33 +226,105 @@ body {
   margin: 0 0 4px;
 }
 
-/* Hanging-indent bullets, matching the PDF flex row (dot + flexible text). */
-.r-bullet {
-  display: flex;
+/* Lists: native ul/ol with nesting. The first block of each <li> is its line. */
+.r-list {
+  margin: 2px 0 4px;
+  padding-left: 22px;
+}
+
+.r-list .r-list {
+  margin: 0;
+}
+
+.r-list li {
   margin: 0 0 3px;
 }
 
-.r-bullet.r-sub {
-  margin-left: 16px;
+.r-list li .r-para {
+  margin: 0;
 }
 
-.r-dot {
-  width: 12px;
-  flex: none;
+.r-list li.r-task {
+  list-style: none;
+  margin-left: -18px;
 }
 
-.r-bulletText {
-  flex: 1;
+/* Keep the checkbox and its label on one line (the label is a block .r-para). */
+.r-list li.r-task .r-para {
+  display: inline;
+}
+
+.r-list li.r-task input {
+  margin-right: 4px;
+  vertical-align: baseline;
+}
+
+.r-quote {
+  margin: 4px 0;
+  padding: 2px 0 2px 10px;
+  border-left: 2px solid #ccc;
+  color: #333;
+}
+
+.r-pre {
+  margin: 6px 0;
+  padding: 10px 12px;
+  background: #f4f4f5;
+  border-radius: 6px;
+  overflow: auto;
+}
+
+.r-pre code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #1f2328;
+  white-space: pre;
+}
+
+.r-code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: #f4f4f5;
+  color: #c7254e;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.r-table {
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 12.5px;
+}
+
+.r-table th,
+.r-table td {
+  border: 1px solid #d0d0d0;
+  padding: 5px 8px;
+}
+
+.r-table th {
+  background: #f4f4f5;
+  font-weight: 700;
+}
+
+.r-img {
+  max-width: 100%;
+  margin: 8px 0;
 }
 
 .r-hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
 .preview strong {
   font-weight: 700;
+}
+
+.preview del {
+  color: #6b7280;
 }
 
 .preview a {

@@ -27,6 +27,7 @@ _Jan 2022 – Present · Remote · SaaS product company_
 ### Globex Inc. - Frontend Engineer
 
 _Jun 2019 – Dec 2021 · Remote_
+
 _Globex: a venture-backed B2B analytics platform._
 
 - Shipped the **customer dashboard and onboarding flow**, improving activation rates. Stack: React, TypeScript, Styled-Components.
@@ -36,6 +37,7 @@ _Globex: a venture-backed B2B analytics platform._
 ### Initech - Junior Frontend Developer
 
 _Aug 2017 – May 2019 · On-site_
+
 _Initech: an enterprise software vendor._
 
 - Built and maintained a **customer support portal** with server-side rendering. Stack: React, Express, GraphQL.
