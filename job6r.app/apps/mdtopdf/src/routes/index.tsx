@@ -63,7 +63,7 @@ function Home() {
     <main className="app">
       <header className="topbar">
         <div>
-          <h1>job6r.app</h1>
+          <h1>mdtopdf.job6r.app</h1>
           <p className="sub">
             Free Markdown to PDF converter. Paste Markdown, download a clean,
             ATS-friendly PDF.
