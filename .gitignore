@@ -17,3 +17,10 @@ venv/
 # Private CV content
 resolved_cv/
 
+.turbo
+
+
+# LLMs 
+.omc
+.omo
+.claude/settings.local.json
